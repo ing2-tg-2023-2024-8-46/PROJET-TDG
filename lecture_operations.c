@@ -79,18 +79,18 @@ t_operation** lecture_operations(t_infos* infos) {
     int precedence1, precedence2;
 
     while (fscanf(file, "%d %d", &precedence1, &precedence2) == 2) {
-        if (tab_operations[precedence1]->nb_precedences == 0) {
-            tab_operations[precedence1]->precedences = (int *) malloc(sizeof(int));
+        if (tab_operations[precedence2]->nb_precedences == 0) {
+            tab_operations[precedence2]->precedences = (int *) malloc(sizeof(int));
         } else {
 
-            tab_operations[precedence1]->precedences = (int *) realloc(
-                    tab_operations[precedence1]->precedences,
-                    sizeof(int) * (tab_operations[precedence1]->nb_precedences + 1)
+            tab_operations[precedence2]->precedences = (int *) realloc(
+                    tab_operations[precedence2]->precedences,
+                    sizeof(int) * (tab_operations[precedence2]->nb_precedences + 1)
             );
         }
 
-        tab_operations[precedence1]->precedences[tab_operations[precedence1]->nb_precedences] = precedence2;
-        tab_operations[precedence1]->nb_precedences++;
+        tab_operations[precedence2]->precedences[tab_operations[precedence2]->nb_precedences] = precedence1;
+        tab_operations[precedence2]->nb_precedences++;
 
 
     }
