@@ -1,6 +1,6 @@
 //
-// Created by lasbo on 20/11/2023.
-//
+// Created by lasbowowowowow on 01/11/2023.
+//  ......
 
 
 #include "lecture_operations.h"
@@ -55,6 +55,7 @@ int main() {
 
     }
 
+    printf("\n");
     printf("INFOS DE LA CHAINE DE MONTAGE\n");
     printf("\t - Nombre d'operations : %d\n",infos->max_operations);
     printf("\t - Temps de cycle : %d\n",infos->temps_cycle);
