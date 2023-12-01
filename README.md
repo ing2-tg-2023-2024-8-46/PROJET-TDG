@@ -1,5 +1,5 @@
 # PROJET-TDG
-Optimisation d'une ligne d'assemblage
+Optimisation d'une ligne d'assemblage...
 
 ![miniongif.gif](readmeImages/miniongif.gif)
 ![robo.gif](readmeImages/robo.gif)
