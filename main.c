@@ -9,7 +9,7 @@
 
 int main() {
 
-    printf("Hello, World!\n");
+    printf("Informations générales : \n");
 
     t_infos* infos = (t_infos*) malloc(sizeof(t_infos));
     t_operation** tab_operations;
