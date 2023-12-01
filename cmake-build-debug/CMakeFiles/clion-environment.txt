@@ -1,0 +1,4 @@
+ToolSet: w64 6.0 (local)@C:\MinGW
+Options: 
+
+Options:-DCMAKE_MAKE_PROGRAM=C:/Users/lasbo/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe
