@@ -5,6 +5,7 @@
 
 #include "lecture_operations.h"
 #include "contrainte_precedences.h"
+#include "contrainte_exclusions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -33,8 +34,7 @@ int main() {
 
 
     contrainte_precedences(infos, tab_operations);
-
-
+    contrainte_exclusions(infos, tab_operations);
 
 
     /*
