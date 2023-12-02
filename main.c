@@ -6,6 +6,7 @@
 #include "lecture_operations.h"
 #include "contrainte_precedences.h"
 #include "contrainte_exclusions.h"
+#include "contrainte_temps_de_cycle.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -19,10 +20,6 @@
 #define RESET_BOLD "\033[21m"
 #define RESET_COLOR "\033[39m"
 
-int rgb2short(int r, int g, int b) {
-    return 16 + (36 * round(r/255.0*5.0)) + (6 * round(g/255.0*5.0)) + round(b/255.0*5.0);
-}
-
 
 int main() {
 
@@ -35,9 +32,13 @@ int main() {
 
     contrainte_precedences(infos, tab_operations);
     contrainte_exclusions(infos, tab_operations);
+    contrainte_temps_de_cycle(infos, tab_operations);
 
 
-    /*
+
+    printf("\n");
+    printf("\n");
+    printf("INFOS DES OPERATIONS\n");
     for (int i = 0; i < infos->max_operations+1; ++i) {
         if (tab_operations[i]->is_valid == 0) continue;
         printf(BOLD"Operation "GOLD"%d\n"RESET ,tab_operations[i]->id);
@@ -58,11 +59,10 @@ int main() {
     printf("\n");
     printf("INFOS DE LA CHAINE DE MONTAGE\n");
     printf("\t - Nombre d'operations : %d\n",infos->max_operations);
-    printf("\t - Temps de cycle : %d\n",infos->temps_cycle);
+    printf("\t - Temps de cycle : %.1f\n",infos->temps_cycle_max);
 
 
-    printf("\033[38;5;%dmHello, World!\033[0m\n", rgb2short(0x00, 0xFF, 0x00));
-     */
+
 
 
 
