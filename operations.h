@@ -27,4 +27,12 @@ typedef struct {
 
 }t_operation;
 
+typedef struct stravail {
+
+    int nb_operations;
+    int* tab_operations;
+    t_operation** tab_operations_struct;
+
+}t_station_travail;
+
 #endif //PROJET_TDG_OPERATIONS_H
