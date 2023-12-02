@@ -153,10 +153,10 @@ t_operation** lecture_operations(t_infos* infos) {
 
     file = fopen("../congif_text_files/temps_cycle.txt", "r");
     if (file == NULL) {
-        printf("[lecture_operations.c] Erreur lors de l'ouverture du fichier temps_cycle.txt\n");
+        printf("[lecture_operations.c] Erreur lors de l'ouverture du fichier temps_cycle_max.txt\n");
         exit(1);
     }
-    fscanf(file, "%d", &infos->temps_cycle);
+    fscanf(file, "%f", &infos->temps_cycle_max);
     fclose(file);
 
 
