@@ -24,6 +24,7 @@ typedef struct {
     int nb_precedences;
 
     float temps_operation;
+    int coloration;
 
 }t_operation;
 
