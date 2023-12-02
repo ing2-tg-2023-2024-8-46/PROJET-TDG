@@ -91,6 +91,7 @@ void DFS_etapes(Graphe* graphe, int id_operation, int etape, int* max_etape) {
 
 }
 
+
 void creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
 
     tab_station_travail = (t_station_travail**) malloc(sizeof(t_station_travail*)*nb_station_travail);
@@ -110,16 +111,8 @@ void creation_station_travail_precedences(Graphe* graphe, t_station_travail** ta
 
     }
 
-    for (int i = 0; i < nb_station_travail; ++i) {
-        printf("Station de travail %d\n", i);
-        //printf("\t - Nombre d'operations : %d\n", tab_station_travail[i]->nb_operations);
-        printf("\t - Operations : ");
-        for (int j = 0; j < tab_station_travail[i]->nb_operations; ++j) {
-            printf("%d ", tab_station_travail[i]->tab_operations[j]);
-        }
-        printf("\n");
-    }
 
+    afficher_station_travail(tab_station_travail, nb_station_travail, "PRECEDENCES");
 
 }
 

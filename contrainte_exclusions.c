@@ -113,6 +113,8 @@ int WelshPowell(Graphe* g) {
 }
 
 
+
+
 void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
 
     tab_station_travail = (t_station_travail**) malloc(sizeof(t_station_travail*)*nb_station_travail);
@@ -132,15 +134,9 @@ void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab
 
     }
 
-    for (int i = 0; i < nb_station_travail; ++i) {
-        printf("Station de travail %d\n", i);
-        //printf("\t - Nombre d'operations : %d\n", tab_station_travail[i]->nb_operations);
-        printf("\t - Operations : ");
-        for (int j = 0; j < tab_station_travail[i]->nb_operations; ++j) {
-            printf("%d ", tab_station_travail[i]->tab_operations[j]);
-        }
-        printf("\n");
-    }
+    afficher_station_travail(tab_station_travail, nb_station_travail, "EXCLUSIONS");
+
+
 
 
 }
@@ -154,7 +150,7 @@ void contrainte_exclusions(t_infos* infos, t_operation** tab_operations) {
     max_color = WelshPowell(g);
 
 
-    afficherGrapheColoration(g);
+    //afficherGrapheColoration(g);
     printf("Nombre de couleurs : %d\n", max_color);
 
 
