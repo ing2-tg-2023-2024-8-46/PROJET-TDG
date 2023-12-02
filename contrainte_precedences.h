@@ -11,10 +11,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// PERMET DE CREER UN GRAPHE A PARTIR DES PRECEDENCES
 Graphe* graph_precedences(t_infos* infos, t_operation** tab_operations);
 
-void etape_traitement(Graphe* graphe, int id_operation, int etape, int* max_etape);
-void creation_station_travail(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail);
+
+// DFS POUR LES PRECEDENCES
+// - Permet de trouver le nombre d'etapes max
+void DFS_etapes(Graphe* graphe, int id_operation, int etape, int* max_etape);
+// PERMET DE CREER LES STATIONS DE TRAVAIL EN FONCTION DES PRECEDENCES
+void creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail);
+// FONCTION A APPELER POUR RESPECTER LA CONTRAINTE DES PRECEDENCES
 void contrainte_precedences(t_infos* infos, t_operation** tab_operations);
 
 

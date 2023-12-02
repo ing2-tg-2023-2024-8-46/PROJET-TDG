@@ -72,7 +72,7 @@ Graphe* graph_precedences(t_infos* infos, t_operation** tab_operations) {
 //░╚════╝░░╚════╝░╚═╝░░╚══╝░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░░░╚═╝░░░╚══════╝
 
 
-void etape_traitement(Graphe* graphe, int id_operation, int etape, int* max_etape) {
+void DFS_etapes(Graphe* graphe, int id_operation, int etape, int* max_etape) {
 
     if (graphe->tabSommet[id_operation]->etape_traitement != -1) return;
     graphe->tabSommet[id_operation]->etape_traitement = etape;
@@ -81,7 +81,7 @@ void etape_traitement(Graphe* graphe, int id_operation, int etape, int* max_etap
         //SI LE SOMMET N'A PAS ETE TRAITE OU SI LE SOMMET EST RELIE A UN SOMMET DEJA TRAITE MAIS AVEC UNE ETAPE PLUS PETITE
         if (graphe->tabSommet[arc->sommet]->etape_traitement <= graphe->tabSommet[id_operation]->etape_traitement) {
             graphe->tabSommet[arc->sommet]->etape_traitement = INF;
-            etape_traitement(graphe, arc->sommet, etape+1, max_etape);
+            DFS_etapes(graphe, arc->sommet, etape + 1, max_etape);
 
         }
 
@@ -91,7 +91,7 @@ void etape_traitement(Graphe* graphe, int id_operation, int etape, int* max_etap
 
 }
 
-void creation_station_travail(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
+void creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
 
     tab_station_travail = (t_station_travail**) malloc(sizeof(t_station_travail*)*nb_station_travail);
     for (int i = 0; i < nb_station_travail; ++i) {
@@ -130,12 +130,12 @@ void contrainte_precedences(t_infos* infos, t_operation** tab_operations) {
     Graphe* g = graph_precedences(infos, tab_operations);
     for (int i = 0; i < infos->max_operations; ++i) {
         if (tab_operations[i]->is_valid == 0) continue;
-        etape_traitement(g, i, 0, &max_etape);
+        DFS_etapes(g, i, 0, &max_etape);
     }
 
 
     t_station_travail** tab_station_travail = NULL;
-    creation_station_travail(g, tab_station_travail, max_etape+1);
+    creation_station_travail_precedences(g, tab_station_travail, max_etape + 1);
 
 
 
