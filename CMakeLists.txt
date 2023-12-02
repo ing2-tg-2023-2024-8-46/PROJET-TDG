@@ -8,4 +8,11 @@ add_executable(PROJET_TDG
         lecture_operations.c
         main.c
         contrainte_precedences.h
-        contrainte_precedences.c)
+        contrainte_precedences.c
+        temps_de_cycle.c
+        creation_graph.h
+        creation_graph.c
+        contrainte_exclusions.h
+        contrainte_exclusions.c
+        contrainte_temps_de_cycle.h
+        contrainte_temps_de_cycle.c)
