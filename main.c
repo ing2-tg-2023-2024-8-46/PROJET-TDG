@@ -7,6 +7,7 @@
 #include "contrainte_precedences.h"
 #include "contrainte_exclusions.h"
 #include "contrainte_temps_de_cycle.h"
+#include "multi_contraintes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -33,9 +34,11 @@ int main() {
     contrainte_precedences(infos, tab_operations);
     contrainte_exclusions(infos, tab_operations);
     contrainte_temps_de_cycle(infos, tab_operations);
+    multi_contraintes(infos, tab_operations);
 
 
 
+    /*
     printf("\n");
     printf("\n");
     printf("INFOS DES OPERATIONS\n");
@@ -60,7 +63,7 @@ int main() {
     printf("INFOS DE LA CHAINE DE MONTAGE\n");
     printf("\t - Nombre d'operations : %d\n",infos->max_operations);
     printf("\t - Temps de cycle : %.1f\n",infos->temps_cycle_max);
-
+*/
 
 
 

@@ -16,4 +16,8 @@ add_executable(PROJET_TDG
         contrainte_exclusions.c
         contrainte_temps_de_cycle.h
         contrainte_temps_de_cycle.c
-        operations.c)
+        operations.c
+        multi_contraintes.h
+        multi_contraintes.c
+        stations.c
+        stations.h)
