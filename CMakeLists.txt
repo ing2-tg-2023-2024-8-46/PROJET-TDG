@@ -20,4 +20,6 @@ add_executable(PROJET_TDG
         multi_contraintes.h
         multi_contraintes.c
         stations.c
-        stations.h)
+        stations.h
+        couts_developpement.c
+        couts_developpement.h)

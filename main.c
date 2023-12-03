@@ -8,6 +8,7 @@
 #include "contrainte_exclusions.h"
 #include "contrainte_temps_de_cycle.h"
 #include "multi_contraintes.h"
+#include "couts_developpement.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -111,18 +112,19 @@ int main() {
             printf("\t 4 - Afficher les contraintes d'exclusions\n");
             printf("\t 5 - Afficher les contraintes de temps de cycle\n");
             printf("\t 6 - Afficher les contraintes multiples\n");
-            printf("\t 7 - Quitter\n"RESET);
+            printf("\t 7 - NOUVEAU ! Simulation de couts de developpement\n");
+            printf("\t 8 - Quitter\n"RESET);
 
             printf("C:\\"BOLD"Projet_TDG\\input : "RESET);
 
             scanf("%d", &choix);
 
             // TANT QUE LE CHOIX EST EN DEHORS DE L'INTERVALLE 0 - 4
-        } while (choix < 1 || choix > 7);
+        } while (choix < 1 || choix > 8);
 
         switch (choix) {
 
-            case 7:
+            case 8:
                 printf("Merci d'avoir utilise notre logiciel de gestion de production\n");
                 printf("A bientot\n");
                 exit(0);
@@ -174,6 +176,12 @@ int main() {
                 contrainte_exclusions(infos, tab_operations);
                 multi_contraintes(infos, tab_operations);
                 fflush(stdin);
+                break;
+
+            case 7:
+                contrainte_precedences(infos, tab_operations);
+                contrainte_exclusions(infos, tab_operations);
+                simulation_couts_de_developpements(infos, tab_operations);
                 break;
 
             default:
