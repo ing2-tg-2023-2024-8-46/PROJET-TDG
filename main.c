@@ -58,7 +58,7 @@ int main() {
     for (int i = 0; i < 50; ++i) {
         printf(LIGHT_GREEN"█"RESET);
         fflush(stdout);
-        usleep((rand() % 50000) + 50000);
+        usleep((rand() % 20000) + 20000);
     }
     printf("\n"BOLD GREEN "CHARGEMENT TERMINE\n"RESET);
 
