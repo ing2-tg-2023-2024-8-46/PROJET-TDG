@@ -11,6 +11,8 @@
 #define GREEN "\033[1;32m"
 #define GOLD "\033[1;33m"
 #define BLUE "\033[1;34m"
+#define MAGENTA "\033[1;35m"
+#define CYAN "\033[1;36m"
 #define RESET "\033[0m"
 #define BOLD "\033[1m"
 #define RESET_BOLD "\033[21m"
@@ -40,17 +42,7 @@ typedef struct {
 
 }t_operation;
 
-typedef struct stravail {
 
-    float temps_cycle;
-    int nb_operations;
-    int* tab_operations;
-    t_operation** tab_operations_struct;
-
-}t_station_travail;
-
-
-void afficher_station_travail(t_station_travail** tab_station_travail, int nb_station_travail, char* message);
 
 
 #endif //PROJET_TDG_OPERATIONS_H
