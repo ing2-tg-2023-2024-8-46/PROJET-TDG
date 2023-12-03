@@ -97,7 +97,7 @@ void DFS_etapes(Graphe* graphe, int id_operation, int etape, int* max_etape) {
 //██████╔╝░░░██║░░░██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝
 //╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
 
-void creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
+t_station_travail** creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
 
     tab_station_travail = creer_stations_travail(nb_station_travail);
 
@@ -114,6 +114,8 @@ void creation_station_travail_precedences(Graphe* graphe, t_station_travail** ta
 
 
     afficher_station_travail(tab_station_travail, nb_station_travail, "PRECEDENCES");
+
+    return tab_station_travail;
 
 }
 

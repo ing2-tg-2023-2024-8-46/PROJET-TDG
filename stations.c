@@ -24,6 +24,7 @@ void afficher_station_travail_coloration(t_station_travail** tab_station_travail
     printf(BOLD"\nCONTRAINTE %s\n"RESET, message);
     for (int i = 0; i < nb_station_travail; ++i) {
         printf("Station de travail %d\n", i);
+        printf("\t - Temps cycle : %.2f\n", tab_station_travail[i]->temps_cycle);
         //printf("\t - Nombre d'operations : %d\n", tab_station_travail[i]->nb_operations);
         printf("\t - Operations : ");
         for (int j = 0; j < tab_station_travail[i]->nb_operations; ++j) {

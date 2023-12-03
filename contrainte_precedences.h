@@ -20,7 +20,7 @@ Graphe* graph_precedences(t_infos* infos, t_operation** tab_operations);
 // - Permet de trouver le nombre d'etapes max
 void DFS_etapes(Graphe* graphe, int id_operation, int etape, int* max_etape);
 // PERMET DE CREER LES STATIONS DE TRAVAIL EN FONCTION DES PRECEDENCES
-void creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail);
+t_station_travail** creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail);
 // FONCTION A APPELER POUR RESPECTER LA CONTRAINTE DES PRECEDENCES
 void contrainte_precedences(t_infos* infos, t_operation** tab_operations);
 

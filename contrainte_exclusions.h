@@ -20,9 +20,10 @@ Graphe* trier_decroissant(Graphe* g);
 // FONCTION A APPELER POUR RESPECTER LA CONTRAINTE DES EXCLUSIONS
 void contrainte_exclusions(t_infos* infos, t_operation** tab_operations);
 // PERMET DE CREER LES STATIONS DE TRAVAIL EN FONCTION DES EXCLUSIONS
-void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail,t_operation** tab_operations, int nb_station_travail);
+t_station_travail** creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail,t_operation** tab_operations, int nb_station_travail);
 // ALGO DE WELSH POWELL
 int WelshPowell(Graphe* g);
+int coloration_gloutonne(Graphe* g);
 
 
 #endif //PROJET_TDG_CONTRAINTE_EXCLUSIONS_H

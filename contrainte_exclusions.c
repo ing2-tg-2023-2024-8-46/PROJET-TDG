@@ -3,6 +3,7 @@
 //
 
 #include "contrainte_exclusions.h"
+#include "contrainte_precedences.h"
 #include "creation_graph.h"
 
 
@@ -111,6 +112,47 @@ Graphe* trier_decroissant(Graphe* g) {
 
 
 
+
+int coloration_gloutonne(Graphe* g) {
+    // Triez les sommets du graphe par degré décroissant
+    Graphe* g_trie = trier_decroissant(g);
+    int colormax = 0;
+
+    // Attribuez une couleur au premier sommet valide
+    for (int i = 0; i < g_trie->ordre; ++i) {
+        if (g_trie->tabSommet[i]->is_valid == 0) continue;
+        g_trie->tabSommet[i]->couleur = 0;
+        break;
+    }
+
+    // Parcourez les sommets pour la coloration gloutonne
+    for (int i = 0; i < g_trie->ordre; ++i) {
+        if (g_trie->tabSommet[i]->is_valid == 0) continue;
+
+        // Initialisez la couleur
+        int couleur = 0;
+
+        // Parcourez les voisins et vérifiez les couleurs déjà utilisées
+        Arrete* currentArrete = g_trie->tabSommet[i]->arrete;
+        while (currentArrete != NULL) {
+            int couleurVoisin = g->tabSommet[currentArrete->sommet]->couleur;
+            if (couleurVoisin == couleur) {
+                couleur++;
+                currentArrete = g_trie->tabSommet[i]->arrete;  // Redémarre la vérification avec la nouvelle couleur
+            } else {
+                currentArrete = currentArrete->arrete_suivante;
+            }
+        }
+
+        // Affectez la couleur au sommet
+        g_trie->tabSommet[i]->couleur = couleur;
+        if (couleur > colormax) colormax = couleur;
+    }
+
+    // Retourne le nombre de couleurs utilisées
+    return colormax + 1;
+}
+
 int WelshPowell(Graphe* g) {
     Graphe* g_trie = trier_decroissant(g);
     int colormax = 0;
@@ -161,7 +203,7 @@ int WelshPowell(Graphe* g) {
 //╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
 
 
-void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail,t_operation** tab_operations, int nb_station_travail) {
+t_station_travail** creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail,t_operation** tab_operations, int nb_station_travail) {
 
     tab_station_travail = creer_stations_travail(nb_station_travail);
 
@@ -186,6 +228,7 @@ void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab
     afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "EXCLUSIONS");
 
 
+    return tab_station_travail;
 
 
 }
@@ -206,6 +249,8 @@ void contrainte_exclusions(t_infos* infos, t_operation** tab_operations) {
 
     Graphe* g = graph_exclusions(infos, tab_operations);
     max_color = WelshPowell(g);
+    max_color = coloration_gloutonne(g);
+
 
 
     //afficherGrapheColoration(g);
