@@ -25,6 +25,7 @@ void simulation_couts_de_developpements(t_infos* infos, t_operation** tab_operat
     float couts_exploitation = 0;
     int volume_prod_mensuelle = 0;
     float consommation_electrique_mensuelle = 0;
+    float couts_prod_unite = 0;
 
 
 
@@ -69,6 +70,8 @@ void simulation_couts_de_developpements(t_infos* infos, t_operation** tab_operat
     printf("\nVolume de production mensuel (en milliers d'unites): ");
     scanf("%d", &volume_prod_mensuelle);
     printf("\nCOUTS D'EXPLOITATION");
+    printf("\nCout de production pour une unite (en euros): ");
+    scanf("%f", &couts_prod_unite);
     printf("\nCouts d'exploitation mensuel (en milliers d'euros): "RESET);
     scanf("%f", &couts_exploitation);
     printf("\nConsommation electrique mensuelle (en kWh): ");
@@ -84,6 +87,7 @@ void simulation_couts_de_developpements(t_infos* infos, t_operation** tab_operat
     printf("Prix de vente d'un produit : %.2f €\n", prix_de_vente);
     printf("Volume de production mensuel : %dk unités\n", volume_prod_mensuelle);
     printf("Couts d'exploitation mensuel : %.2fk €\n", couts_exploitation);
+    printf("Cout de production d'1 unite : %.2f €\n", couts_prod_unite);
     printf("Consommation electrique mensuelle : %.2f kWh\n", consommation_electrique_mensuelle);
     printf("\n\n");
 
@@ -140,11 +144,14 @@ void simulation_couts_de_developpements(t_infos* infos, t_operation** tab_operat
     printf("----------------------\n\n"RESET);
 
     float chiffre_affaire_en_euros = (float) (12 * 1000 * volume_prod_mensuelle) * prix_de_vente;
-    float chiffre_affaire_en_millions = chiffre_affaire_en_euros / 1000000;
-    printf("Chiffre d'affaire par an : "BOLD"%.2fm € "RESET" [%.2f X %d]\n", chiffre_affaire_en_millions, prix_de_vente, volume_prod_mensuelle);
+    float cout_unitaire =  (float) (12 * 1000 * volume_prod_mensuelle) * couts_prod_unite;
+    float chiffre_affaire_en_millions = (chiffre_affaire_en_euros - cout_unitaire) / 1000000;
+    printf("Chiffre d'affaire par an : "BOLD"%.2fm € "RESET" [%.2f - %.2f X %d]\n", chiffre_affaire_en_millions, chiffre_affaire_en_euros, couts_prod_unite, volume_prod_mensuelle);
+
 
     float couts_exploitation_en_milliers = (12 * couts_exploitation);
     printf("Couts d'exploitation par an : "BOLD"%.2fk €\n"RESET, couts_exploitation_en_milliers);
+
 
     float consommation_electrique_par_an = (12 * consommation_electrique_mensuelle);
     printf("Consommation electrique par an : "BOLD"%.2fk kWh\n"RESET, consommation_electrique_par_an);
@@ -152,7 +159,7 @@ void simulation_couts_de_developpements(t_infos* infos, t_operation** tab_operat
     printf("Cout de consommation electrique par an : "BOLD"%.2fk €\n"RESET, cout_consommation_electrique);
 
 
-    float benefice = chiffre_affaire_en_euros - couts_exploitation_en_milliers - cout_consommation_electrique;
+    float benefice = chiffre_affaire_en_euros - couts_exploitation_en_milliers - cout_consommation_electrique - cout_unitaire;
     float benefice_en_millions = benefice / 1000000;
     printf("\n");
     printf(BOLD"Benefice par an : %.2fm €\n"RESET, benefice_en_millions);
