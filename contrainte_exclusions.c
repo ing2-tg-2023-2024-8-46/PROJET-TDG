@@ -249,7 +249,6 @@ void contrainte_exclusions(t_infos* infos, t_operation** tab_operations) {
 
     Graphe* g = graph_exclusions(infos, tab_operations);
     max_color = WelshPowell(g);
-    max_color = coloration_gloutonne(g);
 
 
 
