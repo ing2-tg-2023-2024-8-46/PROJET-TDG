@@ -33,19 +33,6 @@ void creation_station_travail_colore(Graphe* g_precedences, Graphe* g_exclusions
 }
 
 
-float calculer_temps_cycle_station(t_station_travail* station, t_operation** tab_operations) {
-    float temps_cycle_total = 0;
-
-    // Parcours de toutes les opérations de la station de travail
-    for (int i = 0; i < station->nb_operations; ++i) {
-        int operation_index = station->tab_operations[i];
-        // Ajout du temps de cycle de chaque opération
-        temps_cycle_total += tab_operations[operation_index]->temps_operation;
-    }
-
-    return temps_cycle_total;
-}
-
 
 
 void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_infos* infos, t_operation** tab_operations, t_station_travail** tab_station_travail, int max_etape, int max_color) {
@@ -54,7 +41,25 @@ void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_inf
     int stations_en_plus = 0;
     int nb_station_travail_total = max_etape;
 
+    // INITIALISATION DES STATIONS DE TRAVAIL
     tab_station_travail = creer_stations_travail(nb_station_travail);
+
+
+
+    //██████╗░██████╗░███████╗░█████╗░███████╗██████╗░███████╗███╗░░██╗░█████╗░███████╗░██████╗
+    //██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝██╔══██╗██╔════╝████╗░██║██╔══██╗██╔════╝██╔════╝
+    //██████╔╝██████╔╝█████╗░░██║░░╚═╝█████╗░░██║░░██║█████╗░░██╔██╗██║██║░░╚═╝█████╗░░╚█████╗░
+    //██╔═══╝░██╔══██╗██╔══╝░░██║░░██╗██╔══╝░░██║░░██║██╔══╝░░██║╚████║██║░░██╗██╔══╝░░░╚═══██╗
+    //██║░░░░░██║░░██║███████╗╚█████╔╝███████╗██████╔╝███████╗██║░╚███║╚█████╔╝███████╗██████╔╝
+    //╚═╝░░░░░╚═╝░░╚═╝╚══════╝░╚════╝░╚══════╝╚═════╝░╚══════╝╚═╝░░╚══╝░╚════╝░╚══════╝╚═════╝░
+
+    //███████╗██╗░░██╗░█████╗░██╗░░░░░██╗░░░██╗░██████╗██╗░█████╗░███╗░░██╗░██████╗
+    //██╔════╝╚██╗██╔╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██║██╔══██╗████╗░██║██╔════╝
+    //█████╗░░░╚███╔╝░██║░░╚═╝██║░░░░░██║░░░██║╚█████╗░██║██║░░██║██╔██╗██║╚█████╗░
+    //██╔══╝░░░██╔██╗░██║░░██╗██║░░░░░██║░░░██║░╚═══██╗██║██║░░██║██║╚████║░╚═══██╗
+    //███████╗██╔╝╚██╗╚█████╔╝███████╗╚██████╔╝██████╔╝██║╚█████╔╝██║░╚███║██████╔╝
+    //╚══════╝╚═╝░░╚═╝░╚════╝░╚══════╝░╚═════╝░╚═════╝░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
+
 
     for (int i = 0; i < g_precedences->ordre; ++i) {
         if (g_precedences->tabSommet[i]->is_valid == 0) continue;
@@ -85,6 +90,7 @@ void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_inf
                     tab_station_travail[station_existante]->nb_operations++;
                     tab_station_travail[station_existante]->tab_operations = (int*)realloc(tab_station_travail[station_existante]->tab_operations, sizeof(int) * tab_station_travail[station_existante]->nb_operations);
                     tab_station_travail[station_existante]->tab_operations[tab_station_travail[station_existante]->nb_operations - 1] = i;
+                    tab_station_travail[station_existante]->temps_cycle += tab_operations[i]->temps_operation;
                 }
                 // SINON
                 else {
@@ -99,6 +105,7 @@ void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_inf
                     tab_station_travail[nb_station_travail + stations_en_plus - 1]->nb_operations++;
                     tab_station_travail[nb_station_travail + stations_en_plus - 1]->tab_operations = (int*)realloc(tab_station_travail[nb_station_travail + stations_en_plus - 1]->tab_operations, sizeof(int) * tab_station_travail[nb_station_travail + stations_en_plus - 1]->nb_operations);
                     tab_station_travail[nb_station_travail + stations_en_plus - 1]->tab_operations[tab_station_travail[nb_station_travail + stations_en_plus - 1]->nb_operations - 1] = i;
+                    tab_station_travail[nb_station_travail + stations_en_plus - 1]->temps_cycle += tab_operations[i]->temps_operation;
                 }
 
                 continue;
@@ -108,6 +115,7 @@ void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_inf
         tab_station_travail[etape]->nb_operations++;
         tab_station_travail[etape]->tab_operations = (int*)realloc(tab_station_travail[etape]->tab_operations, sizeof(int) * tab_station_travail[etape]->nb_operations);
         tab_station_travail[etape]->tab_operations[tab_station_travail[etape]->nb_operations - 1] = i;
+        tab_station_travail[etape]->temps_cycle += tab_operations[i]->temps_operation;
     }
 
     nb_station_travail += stations_en_plus;
@@ -115,31 +123,51 @@ void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_inf
     int nb = 0;
 
 
+
+    //████████╗███████╗███╗░░░███╗██████╗░░██████╗      ░█████╗░██╗░░░██╗░█████╗░██╗░░░░░███████╗
+    //╚══██╔══╝██╔════╝████╗░████║██╔══██╗██╔════╝      ██╔══██╗╚██╗░██╔╝██╔══██╗██║░░░░░██╔════╝
+    //░░░██║░░░█████╗░░██╔████╔██║██████╔╝╚█████╗░      ██║░░╚═╝░╚████╔╝░██║░░╚═╝██║░░░░░█████╗░░
+    //░░░██║░░░██╔══╝░░██║╚██╔╝██║██╔═══╝░░╚═══██╗      ██║░░██╗░░╚██╔╝░░██║░░██╗██║░░░░░██╔══╝░░
+    //░░░██║░░░███████╗██║░╚═╝░██║██║░░░░░██████╔╝      ╚█████╔╝░░░██║░░░╚█████╔╝███████╗███████╗
+    //░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝╚═╝░░░░░╚═════╝░      ░╚════╝░░░░╚═╝░░░░╚════╝░╚══════╝╚══════╝
+
+
     for (int i = 0; i < nb_station_travail_original; ++i) {
         // SI LE TEMPS DE CYCLE DE LA STATION DE TRAVAIL EST SUPERIEUR AU TEMPS DE CYCLE MAX
-        if (calculer_temps_cycle_station(tab_station_travail[i], tab_operations) > infos->temps_cycle_max) {
+        if (tab_station_travail[i]->temps_cycle > infos->temps_cycle_max) {
             // ON CREE UNE NOUVELLE STATION DE TRAVAIL
             nb_station_travail++;
-            tab_station_travail = (t_station_travail**)realloc(tab_station_travail, sizeof(t_station_travail*) * (nb_station_travail + 1));
-            tab_station_travail[nb_station_travail] = (t_station_travail*)malloc(sizeof(t_station_travail));
-            tab_station_travail[nb_station_travail]->nb_operations = 0;
-            tab_station_travail[nb_station_travail]->tab_operations = NULL;
-            tab_station_travail[nb_station_travail]->coloration = tab_station_travail[i]->coloration;
-            tab_station_travail[nb_station_travail]->etape_traitement = tab_station_travail[i]->etape_traitement;
+            tab_station_travail = (t_station_travail**)realloc(tab_station_travail, sizeof(t_station_travail*) * nb_station_travail);
+            tab_station_travail[nb_station_travail - 1] = (t_station_travail*)malloc(sizeof(t_station_travail));
+            tab_station_travail[nb_station_travail - 1]->nb_operations = 0;
+            tab_station_travail[nb_station_travail - 1]->tab_operations = NULL;
+            tab_station_travail[nb_station_travail - 1]->coloration = tab_station_travail[i]->coloration;
+            tab_station_travail[nb_station_travail - 1]->etape_traitement = tab_station_travail[i]->etape_traitement;
+            tab_station_travail[nb_station_travail - 1]->temps_cycle = 0;
 
-            // ON AJOUTE LES OPERATIONS DE LA STATION DE TRAVAIL QUI DEPASSE LE TEMPS DE CYCLE MAX A LA NOUVELLE STATION DE TRAVAIL
-            for (int j = 0; j < tab_station_travail[i]->nb_operations; ++j) {
-                int operation_index = tab_station_travail[i]->tab_operations[j];
-                if (calculer_temps_cycle_station(tab_station_travail[nb_station_travail], tab_operations) + tab_operations[operation_index]->temps_operation > infos->temps_cycle_max) {
-                    tab_station_travail[nb_station_travail]->nb_operations++;
-                    tab_station_travail[nb_station_travail]->tab_operations = (int*)realloc(tab_station_travail[nb_station_travail]->tab_operations, sizeof(int) * tab_station_travail[nb_station_travail]->nb_operations);
-                    tab_station_travail[nb_station_travail]->tab_operations[tab_station_travail[nb_station_travail]->nb_operations - 1] = operation_index;
-                }
+            // ON TRANSFERE LES OPERATIONS DE LA STATION DE TRAVAIL QUI DEPASSE LE TEMPS DE CYCLE MAX A LA NOUVELLE STATION DE TRAVAIL
+            while (tab_station_travail[i]->temps_cycle > infos->temps_cycle_max) {
+                tab_station_travail[nb_station_travail - 1]->nb_operations++;
+                tab_station_travail[nb_station_travail - 1]->tab_operations = (int*)realloc(tab_station_travail[nb_station_travail - 1]->tab_operations, sizeof(int) * tab_station_travail[nb_station_travail - 1]->nb_operations);
+                tab_station_travail[nb_station_travail - 1]->tab_operations[tab_station_travail[nb_station_travail - 1]->nb_operations - 1] = tab_station_travail[i]->tab_operations[tab_station_travail[i]->nb_operations - 1];
+                tab_station_travail[nb_station_travail - 1]->temps_cycle += tab_operations[tab_station_travail[i]->tab_operations[tab_station_travail[i]->nb_operations - 1]]->temps_operation;
+
+                // ON RETIRE L'OPERATION DE LA STATION DE TRAVAIL
+                tab_station_travail[i]->nb_operations--;
+                tab_station_travail[i]->tab_operations = (int*)realloc(tab_station_travail[i]->tab_operations, sizeof(int) * tab_station_travail[i]->nb_operations);
+                tab_station_travail[i]->temps_cycle -= tab_operations[tab_station_travail[i]->tab_operations[tab_station_travail[i]->nb_operations - 1]]->temps_operation;
             }
+
         }
     }
 
 
+    //░█████╗░███████╗███████╗██╗░█████╗░██╗░░██╗░█████╗░░██████╗░███████╗
+    //██╔══██╗██╔════╝██╔════╝██║██╔══██╗██║░░██║██╔══██╗██╔════╝░██╔════╝
+    //███████║█████╗░░█████╗░░██║██║░░╚═╝███████║███████║██║░░██╗░█████╗░░
+    //██╔══██║██╔══╝░░██╔══╝░░██║██║░░██╗██╔══██║██╔══██║██║░░╚██╗██╔══╝░░
+    //██║░░██║██║░░░░░██║░░░░░██║╚█████╔╝██║░░██║██║░░██║╚██████╔╝███████╗
+    //╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝
 
     afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "PRECEDENCES");
 }
