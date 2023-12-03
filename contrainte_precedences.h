@@ -6,6 +6,7 @@
 #ifndef PROJET_TDG_CONTRAINTE_PRECEDENCES_H
 #define PROJET_TDG_CONTRAINTE_PRECEDENCES_H
 
+#include "stations.h"
 #include "operations.h"
 #include "creation_graph.h"
 #include <stdio.h>

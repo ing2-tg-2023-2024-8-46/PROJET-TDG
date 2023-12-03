@@ -5,6 +5,7 @@
 #ifndef PROJET_TDG_CONTRAINTE_TEMPS_DE_CYCLE_H
 #define PROJET_TDG_CONTRAINTE_TEMPS_DE_CYCLE_H
 #include "operations.h"
+#include "stations.h"
 #include "creation_graph.h"
 #include <stdio.h>
 #include <stdlib.h>

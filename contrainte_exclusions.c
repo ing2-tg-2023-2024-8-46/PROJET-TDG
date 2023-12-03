@@ -110,30 +110,34 @@ Graphe* trier_decroissant(Graphe* g) {
 //░╚════╝░░╚════╝░╚══════╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝
 
 
+
 int WelshPowell(Graphe* g) {
     Graphe* g_trie = trier_decroissant(g);
     int colormax = 0;
 
-    // ATTRIBUTION D'UNE COULEUR AU PREMIER SOMMET
-    g_trie->tabSommet[0]->couleur = 0;
+    // ATTRIBUTION D'UNE COULEUR AU PREMIER SOMMET VALIDE
+    for (int i = 0; i < g_trie->ordre; ++i) {
+        if (g_trie->tabSommet[i]->is_valid == 0) continue;
+        g_trie->tabSommet[i]->couleur = 0;
+        break;
+    }
 
     // PARCOURS DES SOMMETS POUR WELSH POWELL
-    for (int i = 1; i < g_trie->ordre; ++i) {
+    for (int i = 0; i < g_trie->ordre; ++i) {
         // INITIALISATION DE LA COULEUR
         int couleur = 0;
 
-        // PARCOURS DES SOMMETS PRECEDENTS
-        for (int j = 0; j < i; ++j) {
+        // SI LE SOMMET N'EST PAS VALIDE
+        if (g_trie->tabSommet[i]->is_valid == 0) continue;
 
-            Arrete* currentArrete = g_trie->tabSommet[i]->arrete;
-            while (currentArrete != NULL) {
-                // SI LE SOMMET EST ADJACENT
-                if (currentArrete->sommet == g_trie->tabSommet[j]->valeur) {
-                    // SI LA COULEUR DU SOMMET EST LA MEME QUE LA COULEUR DU SOMMET ADJACENT
-                    if (g_trie->tabSommet[i]->couleur == g_trie->tabSommet[j]->couleur) {
-                        couleur++;
-                    }
-                }
+        // PARCOURS DES SOMMETS PRECEDENTS
+        Arrete* currentArrete = g_trie->tabSommet[i]->arrete;
+        while (currentArrete != NULL) {
+            int couleurVoisin = g->tabSommet[currentArrete->sommet]->couleur;
+            if (couleurVoisin == couleur) {
+                couleur++;  // Incrémente la couleur uniquement si nécessaire
+                currentArrete = g_trie->tabSommet[i]->arrete;  // Redémarre la vérification avec la nouvelle couleur
+            } else {
                 currentArrete = currentArrete->arrete_suivante;
             }
         }
@@ -144,7 +148,7 @@ int WelshPowell(Graphe* g) {
     }
 
     // RETOURNE LE NOMBRE DE COULEURS UTILISEES
-    return colormax+1;
+    return colormax + 1;
 }
 
 
@@ -157,13 +161,9 @@ int WelshPowell(Graphe* g) {
 //╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
 
 
-void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
+void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail,t_operation** tab_operations, int nb_station_travail) {
 
-    tab_station_travail = (t_station_travail**) malloc(sizeof(t_station_travail*)*nb_station_travail);
-    for (int i = 0; i < nb_station_travail; ++i) {
-        tab_station_travail[i] = (t_station_travail*) malloc(sizeof(t_station_travail));
-        tab_station_travail[i]->nb_operations = 0;
-    }
+    tab_station_travail = creer_stations_travail(nb_station_travail);
 
     // ON PARCOURT LE GRAPHE
     for (int i = 0; i < graphe->ordre; ++i) {
@@ -176,7 +176,14 @@ void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab
 
     }
 
-    afficher_station_travail(tab_station_travail, nb_station_travail, "EXCLUSIONS");
+    // TRANSFERER LES COULEURS DU GRAPHE AU TABLEAU D'OPERATIONS
+    for (int i = 0; i < graphe->ordre; ++i) {
+        if (graphe->tabSommet[i]->is_valid == 0) continue;
+        int couleur = graphe->tabSommet[i]->couleur;
+        tab_operations[i]->coloration = couleur;
+    }
+
+    afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "EXCLUSIONS");
 
 
 
@@ -206,7 +213,7 @@ void contrainte_exclusions(t_infos* infos, t_operation** tab_operations) {
 
 
     t_station_travail** tab_station_travail = NULL;
-    creation_station_travail_exclusions(g, tab_station_travail, max_color);
+    creation_station_travail_exclusions(g, tab_station_travail, tab_operations, max_color);
 
 
 }

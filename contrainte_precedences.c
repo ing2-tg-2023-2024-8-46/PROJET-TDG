@@ -2,6 +2,7 @@
 // Created by lasbo on 24/11/2023.
 //
 
+
 #include "contrainte_precedences.h"
 #include "creation_graph.h"
 #define INF (-1)
@@ -98,11 +99,7 @@ void DFS_etapes(Graphe* graphe, int id_operation, int etape, int* max_etape) {
 
 void creation_station_travail_precedences(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
 
-    tab_station_travail = (t_station_travail**) malloc(sizeof(t_station_travail*)*nb_station_travail);
-    for (int i = 0; i < nb_station_travail; ++i) {
-        tab_station_travail[i] = (t_station_travail*) malloc(sizeof(t_station_travail));
-        tab_station_travail[i]->nb_operations = 0;
-    }
+    tab_station_travail = creer_stations_travail(nb_station_travail);
 
     // ON PARCOURT LE GRAPHE
     for (int i = 0; i < graphe->ordre; ++i) {
@@ -139,9 +136,11 @@ void contrainte_precedences(t_infos* infos, t_operation** tab_operations) {
         DFS_etapes(g, i, 0, &max_etape);
     }
 
+    max_etape++;
+
 
     t_station_travail** tab_station_travail = NULL;
-    creation_station_travail_precedences(g, tab_station_travail, max_etape + 1);
+    creation_station_travail_precedences(g, tab_station_travail, max_etape);
 
 
 

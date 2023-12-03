@@ -15,11 +15,7 @@
 void creation_station_travail_temps_cycle(t_infos* infos, t_operation** tab_operations, t_station_travail** tab_station_travail) {
 
     int nb_station_travail = 0;
-    tab_station_travail = (t_station_travail**) malloc(sizeof(t_station_travail*));
-    tab_station_travail[0] = (t_station_travail*) malloc(sizeof(t_station_travail));
-    tab_station_travail[0]->nb_operations = 0;
-    tab_station_travail[0]->tab_operations = NULL;
-    tab_station_travail[0]->temps_cycle = 0;
+    tab_station_travail = creer_stations_travail(1);
 
     // TANT QUE TEMPS CYCLE + TEMPS OPERATION ACTUELLE < TEMPS CYCLE MAX
     // ON AJOUTE UNE OPERATION A LA STATION DE TRAVAIL
