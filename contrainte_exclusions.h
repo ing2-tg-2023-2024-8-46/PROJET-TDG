@@ -24,6 +24,6 @@ t_station_travail** creation_station_travail_exclusions(Graphe* graphe, t_statio
 // ALGO DE WELSH POWELL
 int WelshPowell(Graphe* g);
 int coloration_gloutonne(Graphe* g);
-
+int coloration_glouton(Graphe* graphe);
 
 #endif //PROJET_TDG_CONTRAINTE_EXCLUSIONS_H

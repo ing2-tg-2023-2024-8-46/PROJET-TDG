@@ -191,6 +191,7 @@ void multi_contraintes(t_infos* infos, t_operation** tab_operations) {
     // GRAPH EXCLUSIONS
     Graphe* g_exclusions = graph_exclusions(infos, tab_operations);
     max_color = WelshPowell(g_exclusions);
+    //max_color = coloration_glouton(g_exclusions);
 
 
     int nb_station_travail = 0;
