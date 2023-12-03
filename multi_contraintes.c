@@ -35,7 +35,7 @@ void creation_station_travail_colore(Graphe* g_precedences, Graphe* g_exclusions
 
 
 
-void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_infos* infos, t_operation** tab_operations, t_station_travail** tab_station_travail, int max_etape, int max_color) {
+t_station_travail** creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_infos* infos, t_operation** tab_operations, t_station_travail** tab_station_travail, int max_etape, int max_color, int* nb_station_travail_main) {
 
     int nb_station_travail = max_etape;
     int stations_en_plus = 0;
@@ -170,6 +170,9 @@ void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_inf
     //╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝
 
     afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "PRECEDENCES");
+
+    *nb_station_travail_main = nb_station_travail;
+    return tab_station_travail;
 }
 
 void multi_contraintes(t_infos* infos, t_operation** tab_operations) {
@@ -190,9 +193,12 @@ void multi_contraintes(t_infos* infos, t_operation** tab_operations) {
     max_color = WelshPowell(g_exclusions);
 
 
+    int nb_station_travail = 0;
     t_station_travail** tab_station_travail = NULL;
     creation_station_travail_colore(g_precedences, g_exclusions, infos, tab_operations, tab_station_travail, max_etape, max_color);
-    creation_station_travail(g_precedences, g_exclusions, infos, tab_operations, tab_station_travail, max_etape, max_color);
+    tab_station_travail = creation_station_travail(g_precedences, g_exclusions, infos, tab_operations, tab_station_travail, max_etape, max_color, &nb_station_travail);
+
+
 
 }
 
