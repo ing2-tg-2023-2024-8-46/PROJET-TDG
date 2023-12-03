@@ -111,38 +111,30 @@ void creation_station_travail(Graphe* g_precedences, Graphe* g_exclusions, t_inf
     }
 
     nb_station_travail += stations_en_plus;
+    int nb_station_travail_original = nb_station_travail;
     int nb = 0;
 
 
-    for (int i = 0; i < nb_station_travail; ++i) {
+    for (int i = 0; i < nb_station_travail_original; ++i) {
         // SI LE TEMPS DE CYCLE DE LA STATION DE TRAVAIL EST SUPERIEUR AU TEMPS DE CYCLE MAX
         if (calculer_temps_cycle_station(tab_station_travail[i], tab_operations) > infos->temps_cycle_max) {
             // ON CREE UNE NOUVELLE STATION DE TRAVAIL
-            stations_en_plus++;
-            tab_station_travail = (t_station_travail**)realloc(tab_station_travail, sizeof(t_station_travail*) * (nb_station_travail + stations_en_plus));
-            tab_station_travail[nb_station_travail + stations_en_plus - 1] = (t_station_travail*)malloc(sizeof(t_station_travail));
-            tab_station_travail[nb_station_travail + stations_en_plus - 1]->nb_operations = 0;
-            tab_station_travail[nb_station_travail + stations_en_plus - 1]->tab_operations = NULL;
-            tab_station_travail[nb_station_travail + stations_en_plus - 1]->coloration = tab_station_travail[i]->coloration;
-            tab_station_travail[nb_station_travail + stations_en_plus - 1]->etape_traitement = tab_station_travail[i]->etape_traitement;
+            nb_station_travail++;
+            tab_station_travail = (t_station_travail**)realloc(tab_station_travail, sizeof(t_station_travail*) * (nb_station_travail + 1));
+            tab_station_travail[nb_station_travail] = (t_station_travail*)malloc(sizeof(t_station_travail));
+            tab_station_travail[nb_station_travail]->nb_operations = 0;
+            tab_station_travail[nb_station_travail]->tab_operations = NULL;
+            tab_station_travail[nb_station_travail]->coloration = tab_station_travail[i]->coloration;
+            tab_station_travail[nb_station_travail]->etape_traitement = tab_station_travail[i]->etape_traitement;
 
-            // ON RETIRE DES ELEMENTS DU TABLEAU JUSQU'A CE QUE CE SOIT BON
-            while (calculer_temps_cycle_station(tab_station_travail[i], tab_operations) > infos->temps_cycle_max) {
-                // On transfère une opération de la station i à la nouvelle station créée
-                int last_op_index = tab_station_travail[i]->nb_operations - 1;
-
-                // Ajout de l'opération à la nouvelle station
-                tab_station_travail[nb_station_travail + stations_en_plus - 1]->nb_operations++;
-                tab_station_travail[nb_station_travail + stations_en_plus - 1]->tab_operations =
-                        (int*)realloc(tab_station_travail[nb_station_travail + stations_en_plus - 1]->tab_operations,
-                                      sizeof(int) * tab_station_travail[nb_station_travail + stations_en_plus - 1]->nb_operations);
-                tab_station_travail[nb_station_travail + stations_en_plus - 1]->tab_operations[tab_station_travail[nb_station_travail + stations_en_plus - 1]->nb_operations - 1] =
-                        tab_station_travail[i]->tab_operations[last_op_index];
-
-                // On diminue la taille de la station i
-                tab_station_travail[i]->nb_operations--;
-                tab_station_travail[i]->tab_operations =
-                        (int*)realloc(tab_station_travail[i]->tab_operations, sizeof(int) * tab_station_travail[i]->nb_operations);
+            // ON AJOUTE LES OPERATIONS DE LA STATION DE TRAVAIL QUI DEPASSE LE TEMPS DE CYCLE MAX A LA NOUVELLE STATION DE TRAVAIL
+            for (int j = 0; j < tab_station_travail[i]->nb_operations; ++j) {
+                int operation_index = tab_station_travail[i]->tab_operations[j];
+                if (calculer_temps_cycle_station(tab_station_travail[nb_station_travail], tab_operations) + tab_operations[operation_index]->temps_operation > infos->temps_cycle_max) {
+                    tab_station_travail[nb_station_travail]->nb_operations++;
+                    tab_station_travail[nb_station_travail]->tab_operations = (int*)realloc(tab_station_travail[nb_station_travail]->tab_operations, sizeof(int) * tab_station_travail[nb_station_travail]->nb_operations);
+                    tab_station_travail[nb_station_travail]->tab_operations[tab_station_travail[nb_station_travail]->nb_operations - 1] = operation_index;
+                }
             }
         }
     }
