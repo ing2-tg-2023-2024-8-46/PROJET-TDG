@@ -5,8 +5,22 @@
 #include "contrainte_exclusions.h"
 #include "creation_graph.h"
 
+
+
+
+
+
+//░██████╗░██████╗░░█████╗░██████╗░██╗░░██╗
+//██╔════╝░██╔══██╗██╔══██╗██╔══██╗██║░░██║
+//██║░░██╗░██████╔╝███████║██████╔╝███████║
+//██║░░╚██╗██╔══██╗██╔══██║██╔═══╝░██╔══██║
+//╚██████╔╝██║░░██║██║░░██║██║░░░░░██║░░██║
+//░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░░░░╚═╝░░╚═╝
+
+
 Graphe* graph_exclusions(t_infos* infos, t_operation** tab_operations) {
 
+    // CREATION ET ALLOCATION DU GRAPH
     Graphe* graphe = (Graphe*) malloc(sizeof(Graphe));
     graphe->taille = infos->max_operations+1;
     graphe->ordre = infos->max_operations+1;
@@ -14,6 +28,7 @@ Graphe* graph_exclusions(t_infos* infos, t_operation** tab_operations) {
     graphe->tabSommet = (Sommet**) malloc(sizeof(Sommet*) * graphe->ordre);
 
 
+    // CREATION ET ALLOCATION DES SOMMETS
     for (int i = 0; i < graphe->ordre; ++i) {
         graphe->tabSommet[i] = (Sommet*) malloc(sizeof(Sommet));
         graphe->tabSommet[i]->valeur = i;
@@ -22,6 +37,7 @@ Graphe* graph_exclusions(t_infos* infos, t_operation** tab_operations) {
         graphe->tabSommet[i]->etape_traitement = 0;
     }
 
+    // CREATION DES ARETES
     for (int i = 0; i < infos->max_operations; ++i) {
         if (tab_operations[i]->is_valid == 0) continue;
         if (tab_operations[i]->exclusions == NULL) continue;
@@ -37,6 +53,17 @@ Graphe* graph_exclusions(t_infos* infos, t_operation** tab_operations) {
     return graphe;
 
 }
+
+
+
+
+
+//░██████╗░█████╗░██████╗░████████╗
+//██╔════╝██╔══██╗██╔══██╗╚══██╔══╝
+//╚█████╗░██║░░██║██████╔╝░░░██║░░░
+//░╚═══██╗██║░░██║██╔══██╗░░░██║░░░
+//██████╔╝╚█████╔╝██║░░██║░░░██║░░░
+//╚═════╝░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░
 
 
 Graphe* trier_decroissant(Graphe* g) {
@@ -73,6 +100,14 @@ Graphe* trier_decroissant(Graphe* g) {
 
 }
 
+
+
+//░█████╗░░█████╗░██╗░░░░░░█████╗░██████╗░░█████╗░████████╗██╗░█████╗░███╗░░██╗
+//██╔══██╗██╔══██╗██║░░░░░██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║
+//██║░░╚═╝██║░░██║██║░░░░░██║░░██║██████╔╝███████║░░░██║░░░██║██║░░██║██╔██╗██║
+//██║░░██╗██║░░██║██║░░░░░██║░░██║██╔══██╗██╔══██║░░░██║░░░██║██║░░██║██║╚████║
+//╚█████╔╝╚█████╔╝███████╗╚█████╔╝██║░░██║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║
+//░╚════╝░░╚════╝░╚══════╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝
 
 
 int WelshPowell(Graphe* g) {
@@ -114,6 +149,13 @@ int WelshPowell(Graphe* g) {
 
 
 
+//░██████╗████████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗
+//██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝
+//╚█████╗░░░░██║░░░███████║░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░
+//░╚═══██╗░░░██║░░░██╔══██║░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗
+//██████╔╝░░░██║░░░██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝
+//╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
+
 
 void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab_station_travail, int nb_station_travail) {
 
@@ -140,6 +182,15 @@ void creation_station_travail_exclusions(Graphe* graphe, t_station_travail** tab
 
 
 }
+
+
+
+//███╗░░░███╗░█████╗░██╗███╗░░██╗
+//████╗░████║██╔══██╗██║████╗░██║
+//██╔████╔██║███████║██║██╔██╗██║
+//██║╚██╔╝██║██╔══██║██║██║╚████║
+//██║░╚═╝░██║██║░░██║██║██║░╚███║
+//╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝╚═╝░░╚══╝
 
 
 void contrainte_exclusions(t_infos* infos, t_operation** tab_operations) {
