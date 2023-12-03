@@ -5,6 +5,13 @@
 #include "contrainte_temps_de_cycle.h"
 
 
+//░██████╗████████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░██████╗
+//██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔════╝
+//╚█████╗░░░░██║░░░███████║░░░██║░░░██║██║░░██║██╔██╗██║╚█████╗░
+//░╚═══██╗░░░██║░░░██╔══██║░░░██║░░░██║██║░░██║██║╚████║░╚═══██╗
+//██████╔╝░░░██║░░░██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║██████╔╝
+//╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░
+
 void creation_station_travail_temps_cycle(t_infos* infos, t_operation** tab_operations, t_station_travail** tab_station_travail) {
 
     int nb_station_travail = 0;
@@ -21,9 +28,9 @@ void creation_station_travail_temps_cycle(t_infos* infos, t_operation** tab_oper
     for (int i = 0; i < infos->max_operations+1; ++i) {
         if (tab_operations[i]->is_valid == 0) continue;
 
-        // Vérifie si l'ajout de l'opération courante dépasse le temps maximal
+        // VERIFIE SI ON DEPASSE LE TEMPS CYCLE MAX
         if (tab_operations[i]->temps_operation + tab_station_travail[nb_station_travail]->temps_cycle > infos->temps_cycle_max) {
-            // Crée une nouvelle station de travail
+            // CREATION D'UNE NOUVELLE STATION DE TRAVAIL
             nb_station_travail++;
             tab_station_travail = (t_station_travail**) realloc(tab_station_travail, sizeof(t_station_travail*)*(nb_station_travail+1));
             tab_station_travail[nb_station_travail] = (t_station_travail*) malloc(sizeof(t_station_travail));
@@ -32,7 +39,7 @@ void creation_station_travail_temps_cycle(t_infos* infos, t_operation** tab_oper
             tab_station_travail[nb_station_travail]->temps_cycle = 0;
         }
 
-        // Ajoute l'opération courante à la station de travail actuelle
+        // ON AJOUTE L'OPERATION A LA STATION DE TRAVAIL
         tab_station_travail[nb_station_travail]->nb_operations++;
         tab_station_travail[nb_station_travail]->tab_operations = (int*) realloc(tab_station_travail[nb_station_travail]->tab_operations, sizeof(int)*tab_station_travail[nb_station_travail]->nb_operations);
         tab_station_travail[nb_station_travail]->tab_operations[tab_station_travail[nb_station_travail]->nb_operations-1] = i;
@@ -48,7 +55,12 @@ void creation_station_travail_temps_cycle(t_infos* infos, t_operation** tab_oper
 
 }
 
-
+//███╗░░░███╗░█████╗░██╗███╗░░██╗
+//████╗░████║██╔══██╗██║████╗░██║
+//██╔████╔██║███████║██║██╔██╗██║
+//██║╚██╔╝██║██╔══██║██║██║╚████║
+//██║░╚═╝░██║██║░░██║██║██║░╚███║
+//╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝╚═╝░░╚══╝
 
 void contrainte_temps_de_cycle(t_infos* infos, t_operation** tab_operations) {
 
