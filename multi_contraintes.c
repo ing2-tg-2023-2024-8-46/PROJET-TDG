@@ -27,7 +27,7 @@ void creation_station_travail_colore(Graphe* g_precedences, Graphe* g_exclusions
 
     }
 
-    afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "PRECEDENCES");
+    afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "BI-CONTRAINTES");
 
 
 }
@@ -112,6 +112,7 @@ t_station_travail** creation_station_travail(Graphe* g_precedences, Graphe* g_ex
             }
         }
 
+        // ON AJOUTE L'OPERATION A LA STATION DE TRAVAIL
         tab_station_travail[etape]->nb_operations++;
         tab_station_travail[etape]->tab_operations = (int*)realloc(tab_station_travail[etape]->tab_operations, sizeof(int) * tab_station_travail[etape]->nb_operations);
         tab_station_travail[etape]->tab_operations[tab_station_travail[etape]->nb_operations - 1] = i;
@@ -169,7 +170,7 @@ t_station_travail** creation_station_travail(Graphe* g_precedences, Graphe* g_ex
     //██║░░██║██║░░░░░██║░░░░░██║╚█████╔╝██║░░██║██║░░██║╚██████╔╝███████╗
     //╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝
 
-    afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "PRECEDENCES");
+    afficher_station_travail_coloration(tab_station_travail, tab_operations, nb_station_travail, "MULTI-CONTRAINTE");
 
     *nb_station_travail_main = nb_station_travail;
     return tab_station_travail;
@@ -191,7 +192,7 @@ void multi_contraintes(t_infos* infos, t_operation** tab_operations) {
     // GRAPH EXCLUSIONS
     Graphe* g_exclusions = graph_exclusions(infos, tab_operations);
     max_color = WelshPowell(g_exclusions);
-    //max_color = coloration_glouton(g_exclusions);
+    max_color = coloration_glouton(g_exclusions);
 
 
     int nb_station_travail = 0;

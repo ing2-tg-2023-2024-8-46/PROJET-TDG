@@ -110,7 +110,7 @@ Graphe* trier_decroissant(Graphe* g) {
 //╚█████╔╝╚█████╔╝███████╗╚█████╔╝██║░░██║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║
 //░╚════╝░░╚════╝░╚══════╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝
 
-int estCouleurValide(Graphe* graphe, int sommet, int couleur) {
+int isCouleurValide(Graphe* graphe, int sommet, int couleur) {
     Arrete* arrete = graphe->tabSommet[sommet]->arrete;
     while (arrete != NULL) {
         if (graphe->tabSommet[arrete->sommet]->is_valid && graphe->tabSommet[arrete->sommet]->couleur == couleur) {
@@ -121,15 +121,15 @@ int estCouleurValide(Graphe* graphe, int sommet, int couleur) {
     return 1;  // SUCCES
 }
 
-int colorerGrapheExhaustif(Graphe* graphe, int sommet) {
+int colorerGraph(Graphe* graphe, int sommet) {
     if (sommet == graphe->ordre) return 1;  // TOUT LES SOMMETS SONT COLORES
 
     for (int couleur = 0; couleur < graphe->ordre; couleur++) {
-        if (estCouleurValide(graphe, sommet, couleur)) {
+        if (isCouleurValide(graphe, sommet, couleur)) {
             graphe->tabSommet[sommet]->couleur = couleur;
 
             // COLORATION DU PROCHAIN SOMMET
-            if (colorerGrapheExhaustif(graphe, sommet + 1)) return 1; // REUSSI
+            if (colorerGraph(graphe, sommet + 1)) return 1; // REUSSI
 
             // PAS REUSSI
             graphe->tabSommet[sommet]->couleur = -1;
@@ -145,7 +145,7 @@ int coloration_glouton(Graphe* graphe) {
     }
 
     // DEBUT COLORATION
-    int result = colorerGrapheExhaustif(graphe, 0);
+    int result = colorerGraph(graphe, 0);
 
     if (result) { // SI 1, COLORATION REUSSIE
         int maxCouleur = 0;
@@ -256,7 +256,7 @@ void contrainte_exclusions(t_infos* infos, t_operation** tab_operations) {
 
     Graphe* g = graph_exclusions(infos, tab_operations);
     max_color = WelshPowell(g);
-    //max_color = coloration_glouton(g);
+    max_color = coloration_glouton(g);
 
 
 
