@@ -37,7 +37,8 @@ void creation_station_travail_temps_cycle(t_infos* infos, t_operation** tab_oper
 
         // ON AJOUTE L'OPERATION A LA STATION DE TRAVAIL
         tab_station_travail[nb_station_travail]->nb_operations++;
-        tab_station_travail[nb_station_travail]->tab_operations = (int*) realloc(tab_station_travail[nb_station_travail]->tab_operations, sizeof(int)*tab_station_travail[nb_station_travail]->nb_operations);
+        tab_station_travail[nb_station_travail]->tab_operations = (int*) realloc(tab_station_travail[nb_station_travail]->tab_operations, 
+            sizeof(int)*tab_station_travail[nb_station_travail]->nb_operations);
         tab_station_travail[nb_station_travail]->tab_operations[tab_station_travail[nb_station_travail]->nb_operations-1] = i;
         tab_station_travail[nb_station_travail]->temps_cycle += tab_operations[i]->temps_operation;
     }
