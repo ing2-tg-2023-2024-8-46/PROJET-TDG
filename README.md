@@ -5,5 +5,3 @@ Optimisation d'une ligne d'assemblage...
 ![robo.gif](readmeImages/robo.gif)
 ![dance.gif](readmeImages/dance.gif)
 
-
-
